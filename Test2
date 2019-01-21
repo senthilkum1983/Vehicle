@@ -1,0 +1,27 @@
+using System;
+using System.Linq;
+
+public class Program
+{
+	public static void Main()
+	{
+		 int[] arr1 = { 44, 76, 98, 34 };
+         int[] arr2 = { 24, 98, 44, 55, 47, 86 };
+        
+      int[] arr3 = arr1.Intersect(arr2).ToArray();
+
+      foreach (int res in arr3) {
+         Console.WriteLine(res);
+      }
+		 Console.WriteLine("*****************");
+		int[] arr4 = arr1.Except(arr2).ToArray();
+		 foreach (int res in arr4) {
+         Console.WriteLine(res);
+      }
+		 Console.WriteLine("*****************");
+		int[] arr5 = arr2.Except(arr1).ToArray();
+		 foreach (int res in arr5) {
+         Console.WriteLine(res);
+      }
+	}
+}
