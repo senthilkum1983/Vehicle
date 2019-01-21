@@ -1,0 +1,124 @@
+Using C#
+
+This question is made up a small program and 4 classes based on a Vehicle hierarchy
+
+a. Change the class 'Entity' so that you cannot directly instantiate the class.
+b. A vehicle model is linked to a vehicle make. For example A180 avantgarde model's parent is make MercedesBenz. Change the vehicle model class to reflect this
+c. The VehicleModel will have many VehiclePrices (Array or list). Change the VehicleModel class to reflect this.
+d. Add proper constructors to the classes VehicleMake and VehicleModel to enforce that the description is always set and is not null or empty. If it is null or empty you should throw an exception. The constructor of VehicleModel should also take in a parameter for the parent (VehicleMake).
+e. Change the Entity base class to be more generic in that the Id property is not always be an int. Then adjust the classes inheriting from this base class accordingly. The ID type for VehicleMake and Vehicle model is still int but the ID type for VehiclePrice is Guid.
+f. Add another constructor to the VehicleModel class that also takes a parameter called currentYearPrice (decimal). If this constructor is called then the array or list of vehicle prices should be instantiated if needed and you should check if this array already has an entry for the current year and if it does you should update that item's price to the currentYearPrice amount, if it is not in the array then you should add is.
+g. In the Main method of the Program class create an instance of the VehicleMake class and set the description to be Mercedes-Benz.
+h. In the Main method of the Program class create an instance of the VehicleModel class and use the above VehicleMake as 1 parameter and set the description to A180 and set the current year price to be $300000.
+
+
+Copy and paste the below code as the skeleton to start with
+
+//************************************************************
+
+using System;
+
+namespace ConsoleAppTestPart2
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.WriteLine("Start");
+
+			//implementation for g
+			VehicleMake make = new VehicleMake('Mercedes-Benz');
+
+            //implementation for h
+			VehiclePrice price = new VehiclePrice({'Year': currentYer, 'price': 300000});
+			VehicleModel model = new VehicleModel("A180", make, price);
+
+			Console.WriteLine("Complete");
+			Console.ReadKey();
+		}
+	}
+
+	/// <summary>
+	/// base class for IDs
+	/// </summary>
+	abstract class Entity<T>
+	{
+		public <T> Id { get; set; }
+	}
+
+	/// <summary>
+	/// examples of makes of vehicle are Mercedes-Benz, Audi, Toyota, etc
+	/// </summary>
+	public class VehicleMake: Entity<T>
+	{	
+		public VehicleMake(){
+		
+		}
+		public VehicleMake(string description){
+			this.decription = description;
+
+		if(string.isNullOrEmpty(description)){
+		 	throw EmptyException('Vehicle make's description is empty');
+			}
+		    }
+		}
+	
+		public string Description { get; set; }
+	}
+	
+	/// <summary>
+	/// examples of vehicle models are A 180 avantgarde or Corolla 1.6 GLE
+	/// </summary>
+	public class VehicleModel: Entity<T>
+	{
+		public VehicleModel(){
+
+		}
+		public VehicleModel(string description, VehicleMake make, decimal currentYearPrice){
+			this.decription = description;
+			this.vehicleMake = make;
+
+			if(string.isNullOrEmpty(description) || make == null){
+		 		throw EmptyException('Vehicle model's description or vehicle make is empty');
+			}
+			String currentYear = DateTime.Now.Year;
+			if(VehiclePrices == null || VehiclePrices.length == 0){
+				VehiclePrices = new Dictionary<VehiclePrice>;
+				VehiclePrices.add(currentYear, currentYearPrice);
+			}else{
+				VehiclePrices[currentYear] = currentYearPrice;
+			}
+		}
+
+		public VehileModel(decimal currentYearPrice){
+			String currentYear = DateTime.Now.Year;
+			if(VehiclePrices == null || VehiclePrices.length == 0){
+				VehiclePrices = new Dictionary<VehiclePrice>;
+				VehiclePrices.add(currentYear, currentYearPrice);
+			}else{
+								
+				VehiclePrices[currentYear] = currentYearPrice;
+			}
+		}
+
+		public VehicleMake VehicleMake {get; set;}
+		public Dictionary<String, VehiclePrice> VehiclePrices;
+		public string Description { get; set; }
+	}
+
+	/// <summary>
+	/// This has the price or the vehicle for a given year
+	/// </summary>
+	public class VehiclePrice: Entity
+	{
+		public int Year { get; set; }
+		public decimal Price { get; set; }
+	}
+
+	public class EmptyException: Exception {
+   	public EmptyException(string message): base(message) {
+	
+   	}
+	}
+
+}
